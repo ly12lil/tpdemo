@@ -1,0 +1,125 @@
+{extend name='public:base'}
+{block name='js'}
+<script>
+    $(document).ready(function () {
+        $('#left').css('height',$(document).height())
+        layui.use('layedit', function(){
+            var layedit = layui.layedit;
+            layedit.set({
+                uploadImage: {
+                    url: '{:url("lay_img_upload")}' //接口url
+                    ,type: 'post' //默认post
+                }
+            });
+            var index = layedit.build('text'); //建立编辑器
+            layui.use('form', function(){
+                var form = layui.form;
+                form.render();
+                form.on('submit(formDemo)', function(data){
+                    layedit.sync(index);
+                    $.ajax({
+                        type:'post',
+                        url:'{:url("dorelease")}',
+                        data: $('#info').serialize(),
+                        dataType:'json',
+                        success:function (data) {
+                            if(data.status == 1){
+                                alert(data.message);
+                                window.location.href='{:url("release")}';
+                            }else{
+                                alert(data.message);
+                            }
+                        }
+                    })
+                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                });
+            });
+        });
+        var upload = layui.upload;
+        //创建一个上传组件
+        upload.render({
+            elem: '#test1'
+            ,url: '{:url("lay_img_upload")}'
+            ,done: function(res, index, upload){ //上传后的回调
+                if(res.code == 0){
+                    $('#info').append('<input type="hidden" name="img" value="'+res.data.src+'">');
+                    $('#test1').after('<span style="color: #00c0ef;">上传成功</span>');
+                    $('#test1').attr('disabled','disabled');
+                }else {
+                    alert('上传失败');
+                }
+            }
+            ,accept: 'img' //允许上传的文件类型
+            ,size: 500 //最大允许上传的文件大小
+        })
+
+
+
+    })
+</script>
+{/block}
+{block name='body'}
+<div class="col-xs-12">
+
+
+        <!--添加轮播图　弹出框　默认不显示-->
+        <div class="box box-primary"  id="draggable1">
+            <div class="layui-form box-header with-border">
+                <h3 class="box-title">添加</h3>
+                <font class="pull-right" style="vertical-align: inherit;width: 20px" id="dra1_close">× </font>
+            </div>
+            <div class="box-body" style="">
+                <div class="box-body">
+                    <form class="layui-form" id="info" method="post">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">文章名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="name" required  lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">分组</label>
+                            <div class="layui-input-block">
+                                <select name="sclassify_id" lay-verify="required">
+                                    {volist name='$data' id='list'}
+                                    <option value="{$list['id']}">{$list['name']}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">状态</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="status" value="1" title="显示" checked>
+                                <input type="radio" name="status" value="0" title="不显示">
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-block">
+                                <textarea id="text" name="text" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">缩略图</label>
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn" id="test1">
+                                    <i class="layui-icon">&#xe67c;</i>上传图片
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{/block}
+{/extend}

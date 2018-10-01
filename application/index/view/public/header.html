@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$sys_data['sitename']|default='未知'}</title>
+    <link rel="stylesheet" href="{$Request.root.true}/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{$Request.root.true}/static/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{$Request.root.true}/static/css/style.css">
+    <link rel="stylesheet" href="{$Request.root.true}/static/css/common.css">
+    <link rel="stylesheet" href="{$Request.root.true}/static/css/animate.css">
+    <script src="{$Request.root.true}/static/js/jquery-1.11.0.min.js"></script>
+    <script src="{$Request.root.true}/static/js/bootstrap.min.js"></script>
+    <script src="{$Request.root.true}/static/js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+        $(function () {
+            $('#myCarousel').carousel({
+                interval: 3000,
+            });
+        });
+    </script>
+</head>
+<body>
+<header id="header" class="wow pulse sticky-header">
+    <div class="main-header">
+        <div class="container">
+            <div class="row">
+                <div id="logo" class="text-center col-lg-2 col-md-2 col-sm-3 animate-onscroll">
+                    <a href="#"><img class="my-logo" src="{$Request.root.true}/uploads/{$sys_data['logo']|default='未知'}" alt="Logo"></a>
+                </div>
+                <div class="col-lg-6 col-md-7 col-sm-5 title animate-onscroll college">
+                    <!--正负标题-->
+                    <h1>{$sys_data['title']|default='未知'}</h1>
+                    <h4 class="College">{$sys_data['subtitle']|default='未知'}</h4>
+                </div>
+                <div class="col-lg-4 col-md-3 col-sm-4 newsletter">
+                    <form id="newsletter" action="" method="POST">
+                        <div class="newsletter-form">
+                            <div class=""><input type="text" name="" placeholder="请输入搜索关键字"></div>
+                            <div><button><i class="glyphicon glyphicon-search icon-white"></i></button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

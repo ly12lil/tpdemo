@@ -1,0 +1,187 @@
+{extend name='public:base'}
+    {block name='js'}
+        <script>
+            $(document).ready(function () {
+                layui.use('form', function(){
+                    var form = layui.form;
+                    form.render();
+                    form.on('submit(formDemo)', function(data){
+                        $.ajax({
+                            type:'post',
+                            url:'{:url("doclassify")}',
+                            data: $('#info').serialize(),
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.status == 1){
+                                    alert(data.message);
+                                    window.location.href='{:url("classify")}';
+                                }else{
+                                    alert(data.message);
+                                }
+                            }
+                        })
+                        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                    });
+                });
+                $( "#draggable1" ).draggable();
+                $('#dra1_close').click(function () {
+                    $('#cover').remove();
+                    $( "#draggable1" ).hide();
+                })
+                $("#btn1").click(function () {
+                    $('#main').append('<div id="cover" style="z-index: 90;position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: #000;opacity: 0.6"></div>');
+                    $( "#draggable1" ).show();
+                })
+
+                // $('#dra1_btn1').click(function () {
+                //     $.ajax({
+                //         type:'post',
+                //         url:'{:url("doclassify")}',
+                //         data: $('#info').serialize(),
+                //         dataType:'json',
+                //         success:function (data) {
+                //             if(data.status == 1){
+                //                 alert(data.message);
+                //                 window.location.href='{:url("classify")}';
+                //             }else{
+                //                 alert(data.message);
+                //             }
+                //         }
+                //     })
+                // })
+
+            })
+        </script>
+    {/block}
+    {block name='body'}
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">分类设置</font></font></h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--添加轮播图　弹出框　默认不显示-->
+        <div class="box box-primary" style="z-index: 99999; position: absolute;top:50px;width: 80%;left: 10%;display: none" id="draggable1">
+            <div class="layui-form box-header with-border">
+                <h3 class="box-title">添加</h3>
+                <font class="pull-right" style="vertical-align: inherit;width: 20px" id="dra1_close"> × </font>
+            </div>
+            <div class="box-body" style="">
+                        <div class="box-body">
+                            <form class="layui-form" id="info" method="post">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">分类名</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="name" required  lay-verify="required" placeholder="分类名" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">状态</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="static" value="1" title="启用" checked>
+                                        <input type="radio" name="static" value="0" title="禁用">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">导航显示</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="is_nav" value="1" title="显示" checked>
+                                        <input type="radio" name="is_nav" value="0" title="不显示">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="remarks" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button id="dra1_btn1" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+                            <!--<form action="{:url('doCarousel')}" method="post" id="infoa" enctype="multipart/form-data">-->
+                                <!--&lt;!&ndash;role="form"语义化属性，for浏览器和搜索引擎。&ndash;&gt;-->
+                                <!--<div class="box-body">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>用户名</label>-->
+                                        <!--<input type="text" class="form-control input-lg"  placeholder="name" name="name">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="box-body">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>邮箱</label>-->
+                                        <!--<input type="text" class="form-control input-lg"  placeholder="priority" name="priority">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="box-body">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>等级</label>-->
+                                        <!--<select name="uid" class="form-control input-lg">-->
+                                            <!--<option value ="volvo">管理员</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!--<div class="box-body">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label>选择图片</label>-->
+                                        <!--<input class="form-control input-lg"   type="file" name="imageFile" id="img" />-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</form>-->
+                        </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="box box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody><tr>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">id</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">名称</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">备注</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">添加用户</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">启用状态</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">是否显示导航</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">创建日期</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">删除</font></font></th>
+                </tr>
+
+                {volist name='data' id='list'}
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['id']}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['name']}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['remarks']}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['user_id']|getName}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['static']|getStaticName}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['is_nav']||getStaticName}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['create_time']}</font></font></td>
+                    <td><a class="btn btn-primary" href="{:url('reclassify',['id'=>$list['id']])}">删除</a></td>
+                </tr>
+                {/volist}
+                </tbody></table>
+
+                 <div class="col-sm-9 col-lg-10 pull-left" style="padding-left:10px;">{$data->render()}</div>
+                 <div class="col-sm-3 col-lg-2 pull-right" style="padding-bottom: 20px">
+                　   <button id="btn1" type="button" class="btn btn-block btn-default"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">添加分类</font></font></button>
+                 </div>
+        </div>
+    </div>
+</div>
+    {/block}
+{/extend}

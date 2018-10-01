@@ -1,0 +1,112 @@
+{extend name='public:base'}
+{block name='js'}
+<script>
+    $(document).ready(function(){
+        var a=0;
+        var b=0;
+        if($(document).width()<=991){
+            $("#list1>li:nth-child(1)").click(function(){
+                if(a==0){
+                    $('#list1>li:not(:first-child)').slideDown(300);
+                    a=1;
+                }else if(a==1){
+                    $('#list1>li:not(:first-child)').slideUp(300);
+                    a=0;
+                }
+            });
+
+            $("#list2>li:nth-child(1)").click(function(){
+                if(b==0){
+                    $('#list2>li:not(:first-child)').slideDown(300);
+                    b=1;
+                }else if(b==1){
+                    $('#list2>li:not(:first-child)').slideUp(300);
+                    b=0;
+                }
+            });
+        }else{
+
+            $("#list1>li:nth-child(1)").click(function(){
+                if(a==0){
+                    $('#list1>li:not(:first-child)').slideUp(300);
+
+                    a=1;
+                }else if(a==1){
+                    $('#list1>li:not(:first-child)').slideDown(300);
+                    a=0;
+                }
+            });
+
+            $("#list2>li:nth-child(1)").click(function(){
+                if(b==0){
+                    $('#list2>li:not(:first-child)').slideUp(300);
+                    b=1;
+                }else if(b==1){
+                    $('#list2>li:not(:first-child)').slideDown(300);
+                    b=0;
+                }
+            });
+        }
+    });
+</script>
+{/block}
+{block name='body'}
+<link rel="stylesheet" href="{$Request.root.true}/static/css/article.css">
+<div class="m-banner">
+    <img src="{$Request.root.true}/uploads/layui/20180628/5c43b8199c0ea8d57edb51f3c0758f69.jpg" alt="Third slide" class="tp" width="100%" height="100%">
+</div>
+
+<section class="">
+    <div class="container">
+        <div class="row myrow">
+
+            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 list-nav">
+                <ul id="list1">
+                    <li><h3>学校概括</h3></li>
+                    <li><a href="">学校概括</a></li>
+                    <li><a href="">学校概括</a></li>
+                    <li><a href="">学校概括</a></li>
+                </ul>
+                <ul id="list2">
+                    <li ><h3>特色专业</h3></li>
+                    <li><a href="">计算机网络应用</a></li>
+                    <li><a href="">数字媒体艺术设计</a></li>
+                    <li><a href="">计算机信息管理</a></li>
+                    <li><a href="">计算机信息管理</a></li>
+                    <li><a href="">计算机信息管理</a></li>
+                    <li><a href="">计算机信息管理</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 block main">
+                <div class="col-lg-12 clr header">
+                    <h3>学院简介</h3>
+                    <span class="pull-right">
+                        <a href="">首页</a>&nbsp;>&nbsp;
+                        <a href="">学院概况</a>&nbsp;>&nbsp;
+                        <a href="">学院简介</a>
+                    </span>
+                </div>
+                <div class="header-main-content">
+                    <h2>{$data['name']|default='未知'}</h2>
+                    <h5>
+                        <span>信息来源：</span>暂无
+                        <span>发布日期：</span>{$data['create_time']|default='未知'}
+                        <span>浏览次数：</span>{$data['pv']|default='未知'}
+                    </h5>
+                    <hr>
+                </div>
+                <div class="header-content" style="overflow: hidden">
+                        {$data['text']|default='未知'}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{/block}
+
+
+
+

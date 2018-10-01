@@ -1,0 +1,79 @@
+<!-- Left side column. contains the logo and sidebar -->
+
+<aside class="main-sidebar" id="left">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+
+
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">用户管理</li>
+            <li class="treeview active">
+                <a href="#"><i class="fa fa-link"></i> <span>个人信息</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{:url('admin/user/log')}">操作日志</a></li>
+                </ul>
+            </li>
+            {eq name='$Think.Session.admin_uid' value='1'}
+            <li class="header">站点管理</li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>站点管理</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{:url('admin/system/setup')}">基本设置</a></li>
+                    <li><a href="{:url('admin/system/carousel')}">轮播图</a></li>
+                    <li><a href="{:url('admin/system/links')}">友情链接</a></li>
+                </ul>
+            </li>
+            {/eq}
+            {neq name='$Think.Session.admin_uid' value='3'}
+            <li><a href='{:url("admin/system/userinfo")}'><i class="fa fa-link"></i>用户信息</a></li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>分类信息</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{:url('admin/system/classify')}">父分类</a></li>
+                    <li><a href="{:url('admin/system/sclassify')}">子分类</a></li>
+                </ul>
+            </li>
+            {/neq}
+            <li class="treeview">
+                <a href="#"><i class="fa fa-link"></i> <span>文章管理</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{:url('article/release')}">发布文章</a></li>
+                    <li><a href="{:url('article/modify')}">修改文章</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

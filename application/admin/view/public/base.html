@@ -1,0 +1,24 @@
+{include file='public:header' /}
+{block name='js'}
+{/block}
+{include file='public:left' /}
+
+<!--入口-->
+<div id="main" class="content-wrapper">
+    <section class="content-header">
+        <h1>
+            {$menu|default='未知'}
+            <small>{$submenu|default='未知'}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+            <li class="active">Here</li>
+        </ol>
+    </section>
+<section class="content container-fluid">
+    {block name='body'}{/block}
+</section>
+</div>
+<!--入口-->
+
+{include file='public:footer'}

@@ -1,0 +1,54 @@
+<footer>
+    <div class="wow slideInLeft container">
+        <div class="copyright">
+            {$sys_data['copyright']|default='未知'}
+        </div>
+
+        <div class="link">
+
+            <h4>友情链接</h4>
+            <div>
+                <ul class="">
+                    {volist name='links' id='list'}
+                    <li><a href="{$list['url']}">{$list['name']}</a></li>
+                    {/volist}
+                </ul>
+            </div>
+
+            <!--<div>-->
+            <!--<ul class="">-->
+            <!--<li><a href="#">机械工程学院</a></li>-->
+            <!--<li><a href="#">电气工程学院</a></li>-->
+            <!--<li><a href="#">商贸旅游学院</a></li>-->
+            <!--<li><a href="#">建筑工程学院</a></li>-->
+            <!--<li><a href="#">汽车工程学院</a></li>-->
+            <!--<li><a href="#">轨道交通学院</a></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+        </div>
+
+        <div>
+            <h4>系统平台</h4>
+            <p><i class="icon icon-calendar"></i><a href="#" >&nbsp;校历查询</a></p>
+            <p><i class="icon icon-print"></i><a href="#" >&nbsp;办公系统</a></p>
+            <p><i class="icon icon-attention-alt"></i><a href="#" >&nbsp;信息门户</a></p>
+            <p><i class="icon icon-phone"></i><a href="#" >&nbsp;办公电话</a></p>
+        </div>
+    </div>
+</footer>
+
+<div class="toolbar">
+    <a href="###" class="toolbar-item toolbar-item-weixin">
+        <span class="toolbar-layer"></span>
+    </a>
+    <a href="###" class="toolbar-item toolbar-item-feedback"></a>
+    <a href="###" class="toolbar-item toolbar-item-app">
+        <span class="toolbar-layer"></span>
+    </a>
+    <a href="javascript:scroll(0,0)" id="top" class="toolbar-item toolbar-item-top"></a>
+</div>
+
+
+
+</body>
+</html

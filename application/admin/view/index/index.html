@@ -1,0 +1,52 @@
+{extend name='public:base'}
+
+{block name='js'}
+  <script>
+
+  </script>
+{/block}
+{block name='body'}
+<div class="col-md-3 col-sm-6 col-xs-12 ">
+　<div class="info-box">
+    <!-- Apply any bg-* class to to the icon to color it -->
+    <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">管理员总数</span>
+        <span class="info-box-number">{$user_sum|default='未知'}</span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->
+</div>
+<div class="col-md-3 col-sm-6 col-xs-12 ">
+    　<div class="info-box">
+    <!-- Apply any bg-* class to to the icon to color it -->
+    <span class="info-box-icon bg-aqua"><i class="fa fa-file"></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">文章总数</span>
+        <span class="info-box-number">{$art_sum|default='未知'}</span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->
+</div>
+<div class="col-md-3 col-sm-6 col-xs-12 ">
+    　<div class="info-box">
+    <!-- Apply any bg-* class to to the icon to color it -->
+    <span class="info-box-icon bg-aqua"><i class="fa fa-file"></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">xxx</span>
+        <span class="info-box-number">{$art_sum|default='未知'}</span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->
+</div>
+
+<div class="col-md-3 col-sm-6 col-xs-12 ">
+    　<div class="info-box">
+    <!-- Apply any bg-* class to to the icon to color it -->
+    <span class="info-box-icon bg-aqua"><i class="fa fa-file"></i></span>
+    <div class="info-box-content">
+        <span class="info-box-text">xxx</span>
+        <span class="info-box-number">{$art_sum|default='未知'}</span>
+    </div><!-- /.info-box-content -->
+</div><!-- /.info-box -->
+</div>
+{/block}
+
+{/extend}

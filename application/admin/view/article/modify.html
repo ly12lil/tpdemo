@@ -1,0 +1,179 @@
+{extend name='public:base'}
+    {block name='js'}
+        <script>
+            $(document).ready(function () {
+               $(".bj").click(function () {
+                   $('#info').append('<input type="hidden" name="id" id="ac_id" value="'+$(this).attr('data-id')+'">');
+                   $('#main').append('<div id="cover" style="z-index: 88;position: absolute;top: 0;left: 0;right: 0;bottom: 0;background: #000;opacity: 0.6"></div>');
+                   layui.use('layedit', function(){
+                   var layedit = layui.layedit;
+                   layedit.set({
+                       uploadImage: {
+                           url: '{:url("lay_img_upload")}', //接口url
+                           type: 'post' //默认post
+                       }
+                   });
+                   var index = layedit.build('text'); //建立编辑器
+                   var id = $('#ac_id').val()
+                   $.ajax({
+                   type:'post',
+                   url:'{:url("getac")}',
+                   data: {'id':id},
+                   dataType:'json',
+                   success:function (data) {
+                       $('#name').attr('value',data.name);
+                       layedit.setContent(index, data.text);
+                   }
+               });
+                       layui.use('form', function(){
+                           var form = layui.form;
+                           form.render();
+                           form.on('submit(formDemo)', function(data){
+                               layedit.sync(index);
+                                   $.ajax({
+                                       type:'post',
+                                       url:'{:url("domodify")}',
+                                       data: $('#info').serialize(),
+                                       dataType:'json',
+                                       success:function (data) {
+                                           if(data.status == 1){
+                                               alert(data.message);
+                                               window.location.href='{:url("modify")}';
+                                           }else{
+                                               alert(data.message);
+                                           }
+                                       }
+                                   })
+                                   return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                               });
+                           });
+                   })
+                   var upload = layui.upload;
+                   //创建一个上传组件
+                   upload.render({
+                       elem: '#test1'
+                       ,url: '{:url("lay_img_upload")}'
+                       ,done: function(res, index, upload){ //上传后的回调
+                           if(res.code == 0){
+                               $('#info').append('<input type="hidden" name="img" value="'+res.data.src+'">');
+                               $('#test1').after('<span style="color: #00c0ef;">上传成功</span>');
+                               $('#test1').attr('disabled','disabled');
+                           }else {
+                               alert('上传失败');
+                           }
+                       }
+                       ,accept: 'img' //允许上传的文件类型
+                       ,size: 500 //最大允许上传的文件大小
+                   })
+                   $( "#draggable1" ).show();
+                });
+
+                $( "#draggable1" ).draggable();
+                $('#dra1_close').click(function () {
+
+                    $('#cover').remove();
+                    $('#ac_id').remove();
+                    $( "#draggable1" ).hide();
+                })
+            })
+        </script>
+    {/block}
+    {block name='body'}
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">友情链接管理</font></font></h3>
+
+            <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--添加轮播图　弹出框　默认不显示-->
+        <div class="box box-primary" style="z-index: 99999; position: absolute;top:50px;width: 80%;left: 10%;display: none" id="draggable1">
+            <div class="box-header with-border">
+                <h3 class="box-title">更新文章</h3>
+                <font class="pull-right" style="vertical-align: inherit;width: 20px" id="dra1_close">× </font>
+            </div><!-- /.box-header -->
+            <div class="box-body" style="">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                        </div>
+                        <div class="box-body">
+                            <form class="layui-form"  method="post" id="info">
+                                <!--role="form"语义化属性，for浏览器和搜索引擎。-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">文章名</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="name" id="name" required  lay-verify="required" placeholder="文章名" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">状态</label>
+                                    <div class="layui-input-block" id="stats">
+                                        <input type="radio" name="status" value="1" title="显示" checked>
+                                        <input type="radio" name="status" value="0" title="不显示">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">备注</label>
+                                    <div class="layui-input-block">
+                                        <textarea id="text" name="text" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">缩略图</label>
+                                    <div class="layui-input-block">
+                                        <button type="button" class="layui-btn" id="test1">
+                                            <i class="layui-icon">&#xe67c;</i>上传图片
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div><!-- /.box-body -->
+
+            </div><!-- /.box-body -->
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody><tr>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">id</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">名称</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">状态</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">添加日期</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">编辑</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">删除</font></font></th>
+                </tr>
+
+                {volist name='data' id='list'}
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['id']|default='未知'}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a  target="_Blank" href="{$Request.root.true}/html/{$list['sclassify_id']|default='未知'}/{$list['id']|default='未知'}">{$list['name']|default='未知'}</a></font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['status']|getStaticName}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{$list['create_time']|default='未知'}</font></font></td>
+                    <td><a class="bj btn btn-primary" data-id="{$list['id']|default='未知'}">编辑</a></td>
+                    <td><a class="btn btn-primary" href="{:url('remodify',['id'=>$list['id']])}">删除</a></td>
+                </tr>
+                {/volist}
+                </tbody></table>
+            <div class="col-sm-9 col-lg-10 pull-left" style="padding-left:10px;">{$data->render()}</div>
+
+            <!-- /.box-body -->
+        </div>
+    </div>
+    <!-- /.box -->
+</div>
+    {/block}
+{/extend}
